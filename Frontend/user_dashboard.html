@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .dashboard-container {
+            padding: 30px;
+        }
+
+        .car-card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
+            border-radius: 8px;
+        }
+
+        .car-card img {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .rent-btn {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Car Rental System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container container">
+        <h2 class="text-center mb-4">Available Cars for Rent</h2>
+        <div id="carsContainer" class="row">
+            <!-- Car cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        const cars = [
+            { id: 1, model: "Model S", brand: "Tesla", year: 2023, pricePerDay: 100, image: "https://via.placeholder.com/300x200", isAvailable: true },
+            { id: 2, model: "Civic", brand: "Honda", year: 2022, pricePerDay: 50, image: "https://via.placeholder.com/300x200", isAvailable: true },
+            { id: 3, model: "Corolla", brand: "Toyota", year: 2021, pricePerDay: 60, image: "https://via.placeholder.com/300x200", isAvailable: false }
+        ];
+
+        const carsContainer = document.getElementById('carsContainer');
+
+        function renderCars() {
+            carsContainer.innerHTML = '';
+            cars.forEach(car => {
+                if (car.isAvailable) {
+                    const card = document.createElement('div');
+                    card.classList.add('col-md-4');
+                    card.innerHTML = `
+                        <div class="card car-card">
+                            <img src="${car.image}" class="card-img-top" alt="${car.model}">
+                            <div class="card-body">
+                                <h5 class="card-title">${car.brand} - ${car.model} (${car.year})</h5>
+                                <p class="card-text">Price per day: $${car.pricePerDay}</p>
+                                <button class="btn btn-primary rent-btn" onclick="rentCar(${car.id})">Rent</button>
+                            </div>
+                        </div>
+                    `;
+                    carsContainer.appendChild(card);
+                }
+            });
+        }
+
+        function rentCar(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (car) {
+                alert(`You have rented the ${car.brand} - ${car.model}.`);
+                car.isAvailable = false;
+                renderCars(); // Re-render to update availability
+            } else {
+                alert('Car not found.');
+            }
+        }
+
+        // Initial render
+        renderCars();
+    </script>
+</body>
+
+</html>
