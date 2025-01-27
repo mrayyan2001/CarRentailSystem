@@ -7,6 +7,4 @@ public class User
     public string Role { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    // Navigation property for related Rentals
-    public ICollection<Rental> Rentals { get; set; }
 }

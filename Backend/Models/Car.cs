@@ -7,6 +7,4 @@ public class Car
     public decimal PricePerDay { get; set; }
     public bool IsAvailable { get; set; }
 
-    // Navigation property for related Rentals
-    public ICollection<Rental> Rentals { get; set; }
 }
